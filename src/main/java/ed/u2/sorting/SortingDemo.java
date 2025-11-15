@@ -1,5 +1,6 @@
 package ed.u2.sorting;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,8 @@ public class SortingDemo {
 
     public static void main(String[] args) {
         System.out.println("--- DEMOSTRACIÓN DE ALGORITMOS DE ORDENACIÓN IN-PLACE ---");
-
+System.out.println("%s, %s".formatted(System.getProperty("file.encoding"), Charset.defaultCharset()));
+System.out.println("✨✨✨");
         int[] currentArray = null;
 
         while (true) {
@@ -42,7 +44,8 @@ public class SortingDemo {
      */
     private static int[] selectArrayMenu(int[] current) {
         if (current != null) {
-            System.out.println("\n--- Arreglo actual seleccionado: " + Arrays.toString(current) + " ---");
+            System.out.println("\n--- Arreglo actual seleccionado:  ---");
+            System.out.println(Arrays.toString(current));
         }
         while (true) {
             System.out.println("\n[1. SELECCION DE DATOS]");
@@ -65,7 +68,7 @@ public class SortingDemo {
                     return null; // Salir
                 default:
                     System.out.println("Ingrese una opción válida.");
-                    ;
+
             }
         }
     }
@@ -75,29 +78,29 @@ public class SortingDemo {
      */
     private static int[] selectPredefinedArray() {
         while (true) {
-            System.out.print("Elegir dataset: ");
-            System.out.println("A. " + Arrays.toString(A));
-            System.out.println("B. " + Arrays.toString(B));
-            System.out.println("C. " + Arrays.toString(C));
-            System.out.println("D. " + Arrays.toString(D));
-            System.out.println("E. " + Arrays.toString(E));
-            String selection = scanner.next().toUpperCase();
+            System.out.println("Elegir dataset: ");
+            System.out.println("1. " + Arrays.toString(A));
+            System.out.println("2. " + Arrays.toString(B));
+            System.out.println("3. " + Arrays.toString(C));
+            System.out.println("4. " + Arrays.toString(D));
+            System.out.println("5. " + Arrays.toString(E));
+            String selection = scanner.next();
 
             int[] selected = null;
             switch (selection) {
-                case "A":
+                case "1":
                     selected = A;
                     return Arrays.copyOf(selected, selected.length);
-                case "B":
+                case "2":
                     selected = B;
                     return Arrays.copyOf(selected, selected.length);
-                case "C":
+                case "3":
                     selected = C;
                     return Arrays.copyOf(selected, selected.length);
-                case "D":
+                case "4":
                     selected = D;
                     return Arrays.copyOf(selected, selected.length);
-                case "E":
+                case "5":
                     selected = E;
                     return Arrays.copyOf(selected, selected.length);
                 default:
@@ -119,7 +122,7 @@ public class SortingDemo {
             System.out.println("2. Selection Sort (In-place)");
             System.out.println("3. Bubble Sort (In-place)");
             System.out.println("0. Volver al menú de selección de Arreglo");
-            System.out.print("Seleccione un algoritmo (A/B/C/0): ");
+            System.out.print("Seleccione un algoritmo (1/2/3/0): ");
 
             algorithmChoice = scanner.next().toUpperCase();
             if (algorithmChoice.equals("0")) {
@@ -134,20 +137,20 @@ public class SortingDemo {
         }
         System.out.print("¿Desea la ejecución CON trazas para evidencias? (S/N): ");
         String traceChoice = scanner.next().toUpperCase();
-        boolean trace = traceChoice.equals("S");
+        boolean trace = traceChoice.equalsIgnoreCase("S");
 
         long startTime = System.nanoTime();
         if(trace){
         switch (algorithmChoice) {
-            case "A":
+            case "1":
                 System.out.println("\n--- Ejecutando Insertion Sort (Recomendado empezar aquí) ---");
                 InsertionSort.sort(arr, trace);
                 break;
-            case "B":
+            case "2":
                 System.out.println("\n--- Ejecutando Selection Sort ---");
 
                 break;
-            case "C":
+            case "3":
                 System.out.println("\n--- Ejecutando Bubble Sort --- (Verifique optimización de corte temprano)");
 
                 break;
@@ -157,15 +160,15 @@ public class SortingDemo {
         }
         }else{
             switch (algorithmChoice) {
-            case "A":
+            case "1":
                 System.out.println("\n--- Ejecutando Insertion Sort (Recomendado empezar aquí) --- ");
                 InsertionSort.sort(arr);
                 break;
-            case "B":
+            case "2":
                 System.out.println("\n--- Ejecutando Selection Sort ---");
 
                 break;
-            case "C":
+            case "3":
                 System.out.println("\n--- Ejecutando Bubble Sort --- (Verifique optimización de corte temprano)");
 
                 break;
@@ -179,7 +182,7 @@ public class SortingDemo {
         long durationMs = (endTime - startTime) / 1_000_000;
 
         System.out.println("\n--- RESULTADO FINAL ---");
-        System.out.println("Arreglo Ordenado: " + Arrays.toString(arr));
+        System.out.println("Arreglo Ordenado: \n" + Arrays.toString(arr));
         System.out.printf("Tiempo de ejecución: %d ms\n", durationMs);
         System.out.println("-----------------------\n");
     }

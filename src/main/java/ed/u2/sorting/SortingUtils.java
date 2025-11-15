@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package ed.u2.sorting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,29 +14,35 @@ import java.util.Scanner;
  * @author MikelMZ : Miguel Armas
  */
 public class SortingUtils {
-    
+
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void showAsArray(int[] arreglo) {
-        System.out.println();
-        for (int i = 0; i < arreglo.length; i++) {
-            for (int j = 1; j <= arreglo[i]; j++) {
-                System.out.print(arreglo[i] + " ");
-            }
-            System.out.println();
-        }
-    }
-    
-    public static void showAsBars(int[] arreglo) {
-        System.out.println();
-        for (int i = 0; i < arreglo.length; i++) {
-            for (int j = 1; j <= arreglo[i]; j++) {
-                System.out.print(arreglo[i] + " ");
-            }
-            System.out.println();
-        }
+    public static String barsToString(int[] array) {
+    if (array == null || array.length == 0) {
+        return "Array vacío";
     }
 
+    StringBuilder bars = new StringBuilder();
+    int maxValue = Arrays.stream(array).max().orElse(1);
+    int maxValueWidth = String.valueOf(maxValue).length();
+    int maxBarWidth = 35;
+    
+    for (int i = 0; i < array.length; i++) {
+        int value = array[i];
+        int barLength = (value * maxBarWidth) / Math.max(1, maxValue);
+        
+        String bar = "█".repeat(Math.max(1, barLength));
+        String valueStr = String.format("(%" + maxValueWidth + "d)", value);
+        
+        // Usar formato con padding fijo
+        bars.append(String.format("%2d: %-" + maxBarWidth + "s %s", 
+                                 i, bar, valueStr))
+            .append("\n");
+    }
+
+    return bars.toString();
+}
+    
     public static void wait(int miliseconds) {
         try {
             Thread.sleep(miliseconds);
@@ -46,17 +52,27 @@ public class SortingUtils {
     }
 
     public static void cleanConsole() {
-        // Simulación básica de limpieza
-        for (int i = 0; i < 50; i++) {
-            System.out.println();
+        try {
+            final String os = System.getProperty("os.name").toLowerCase();
+
+            if (os.contains("windows")) {
+                // Para Windows - usar ProcessBuilder que SÍ funciona
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                // Para Linux/Mac - intentar con clear command primero
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (Exception e) {
+            // Si todo falla, usar el método de saltos de línea
+            fallbackClear();
         }
     }
-    
-    public static void cleanConsole(boolean complete) {
-        
+
+    private static void fallbackClear() {
+        System.out.print("\n".repeat(100));
+        System.out.flush();
     }
-    
-    
+
     /**
      * Permite al usuario ingresar valores uno por uno.
      */
@@ -64,11 +80,12 @@ public class SortingUtils {
         List<Integer> temp = new ArrayList<>();
         System.out.println("--- INGRESO MANUAL ---");
         System.out.println("Ingrese números enteros. Escriba 'N' para terminar.");
-
-        while (true) {
+        int count = 0;
+        while (count <= 15) {
             System.out.print("Valor: ");
             if (scanner.hasNextInt()) {
                 temp.add(scanner.nextInt());
+                count++;
             } else {
                 String input = scanner.next();
                 if (input.equalsIgnoreCase("N")) {
@@ -94,11 +111,13 @@ public class SortingUtils {
      * Permite generar un arreglo con N números aleatorios.
      */
     public static int[] generateRandomArray() {
-        System.out.print("Ingrese el tamaño (N) del arreglo a generar: ");
+        System.out.print("Ingrese el tamaño (N) del arreglo a generar (máximo 15): ");
         int size = getIntInput(1, Integer.MAX_VALUE);
-
-        //Se define el valor máximo de valor cómo 40 para controlar la presentación del arreglo
-        int range = 40;
+        if (size > 15) {
+            size = 15;
+        }
+        //Se define el valor máximo de valor cómo 60 para controlar la presentación del arreglo
+        int range = 60;
 
         int[] randomArray = new int[size];
         for (int i = 0; i < size; i++) {
@@ -107,7 +126,7 @@ public class SortingUtils {
         return randomArray;
     }
 
-     /**
+    /**
      * Método auxiliar para asegurar entrada de enteros.
      */
     public static int getIntInput(int min, int max) {
