@@ -55,7 +55,7 @@ public final class InsertionSort {
                 assignments++;
 
                 // Mostrar estado actual
-                showCurrentState(header, array, externalIterations, internalIterations,
+                SortingUtils.showCurrentState(header, array, externalIterations, internalIterations,
                         comparisons, assignments, j, j + 1, "Moviendo");
 
                 j--;
@@ -67,50 +67,12 @@ public final class InsertionSort {
             assignments++;
 
             // Mostrar inserción
-            showCurrentState(header, array, externalIterations, internalIterations,
+            SortingUtils.showCurrentState(header, array, externalIterations, internalIterations,
                     comparisons, assignments, i, j + 1, "Insertando");
         }
 
-        showFinalResult(header, array, externalIterations, internalIterations,
+        SortingUtils.showFinalResult(header, array, externalIterations, internalIterations,
                 comparisons, assignments);
-    }
-
-// Método auxiliar para mostrar estado actual
-    private static void showCurrentState(String header, int[] array, int externalIt,
-            int internalIt, int comp, int assign,
-            int from, int to, String operation) {
-        int totalIterations = externalIt + internalIt;
-        int totalOperations = comp + assign;
-
-        System.out.print("\n".repeat(30) + header
-                + "Iteraciones: " + totalIterations + " (Ext: " + externalIt + ", Int: " + internalIt + ")"
-                + "\nOperaciones: " + totalOperations + " (Comp: " + comp + ", Asig: " + assign + ")"
-                + "\nIndices: " + from + " → " + to + "\n\n"
-                + SortingUtils.barsToString(array)
-                + "\n" + operation + ": " + from + " → " + to);
-        System.out.flush();
-
-        SortingUtils.wait(500);
-    }
-
-// Método auxiliar para mostrar resultado final
-    private static void showFinalResult(String header, int[] array, int externalIt,
-            int internalIt, int comp, int assign) {
-        int totalIterations = externalIt + internalIt;
-        int totalOperations = comp + assign;
-
-        System.out.print("\n".repeat(30) + header
-                + "=== COMPLETADO ===\n\n"
-                + SortingUtils.barsToString(array)
-                + "\n¡Array completamente ordenado!"
-                + "\n\n--- ESTADÍSTICAS ---"
-                + "\nIteraciones del bucle externo: " + externalIt
-                + "\nIteraciones del bucle interno: " + internalIt
-                + "\nTotal iteraciones: " + totalIterations
-                + "\nComparaciones realizadas: " + comp
-                + "\nAsignaciones realizadas: " + assign
-                + "\nTotal operaciones: " + totalOperations);
-        System.out.flush();
     }
 
 }

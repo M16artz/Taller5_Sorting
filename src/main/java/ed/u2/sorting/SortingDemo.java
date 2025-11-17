@@ -1,9 +1,6 @@
 package ed.u2.sorting;
 
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -22,12 +19,10 @@ public class SortingDemo {
 
     public static void main(String[] args) {
         System.out.println("--- DEMOSTRACIÓN DE ALGORITMOS DE ORDENACIÓN IN-PLACE ---");
-System.out.println("%s, %s".formatted(System.getProperty("file.encoding"), Charset.defaultCharset()));
-System.out.println("✨✨✨");
-        int[] currentArray = null;
 
         while (true) {
             // Paso 1: Seleccionar o crear el arreglo
+            int[] currentArray = null;
             currentArray = selectArrayMenu(currentArray);
 
             if (currentArray == null) {
@@ -84,8 +79,12 @@ System.out.println("✨✨✨");
             System.out.println("3. " + Arrays.toString(C));
             System.out.println("4. " + Arrays.toString(D));
             System.out.println("5. " + Arrays.toString(E));
-            String selection = scanner.next();
-
+            System.out.print("Seleccione un opción (1-5): ");
+            String selection = scanner.nextLine().trim();
+            if (selection.isEmpty()) {
+                System.out.println("Entrada vacía. Por favor ingrese 1-5.");
+                continue;
+            }
             int[] selected = null;
             switch (selection) {
                 case "1":
@@ -124,23 +123,25 @@ System.out.println("✨✨✨");
             System.out.println("0. Volver al menú de selección de Arreglo");
             System.out.print("Seleccione un algoritmo (1/2/3/0): ");
 
-            algorithmChoice = scanner.next().toUpperCase();
+            algorithmChoice = scanner.nextLine().trim();
+
             if (algorithmChoice.equals("0")) {
                 System.out.println("Regresando al menú principal...");
-                return; // Vuelve al menú principal
+                return;
             }
+
             if (algorithmChoice.equals("1") || algorithmChoice.equals("2") || algorithmChoice.equals("3")) {
                 break;
-            }else{
-                System.out.println("Ingrese una opción válida.");
+            } else {
+                System.out.println("Ingrese una opción válida (1, 2, 3 o 0).");
             }
         }
+        
         System.out.print("¿Desea la ejecución CON trazas para evidencias? (S/N): ");
-        String traceChoice = scanner.next().toUpperCase();
-        boolean trace = traceChoice.equalsIgnoreCase("S");
+        String traceChoice = scanner.nextLine().trim().toUpperCase();
+        boolean trace = traceChoice.equals("S");
 
         long startTime = System.nanoTime();
-        if(trace){
         switch (algorithmChoice) {
             case "1":
                 System.out.println("\n--- Ejecutando Insertion Sort (Recomendado empezar aquí) ---");
@@ -148,34 +149,15 @@ System.out.println("✨✨✨");
                 break;
             case "2":
                 System.out.println("\n--- Ejecutando Selection Sort ---");
-
+                SelectionSort.sort(arr, trace);
                 break;
             case "3":
                 System.out.println("\n--- Ejecutando Bubble Sort --- (Verifique optimización de corte temprano)");
-
+                BubbleSort.sort(arr, trace);
                 break;
             default:
                 System.out.println("Opción no válida.");
                 return;
-        }
-        }else{
-            switch (algorithmChoice) {
-            case "1":
-                System.out.println("\n--- Ejecutando Insertion Sort (Recomendado empezar aquí) --- ");
-                InsertionSort.sort(arr);
-                break;
-            case "2":
-                System.out.println("\n--- Ejecutando Selection Sort ---");
-
-                break;
-            case "3":
-                System.out.println("\n--- Ejecutando Bubble Sort --- (Verifique optimización de corte temprano)");
-
-                break;
-            default:
-                System.out.println("Opción no válida.");
-                return;
-        }
         }
 
         long endTime = System.nanoTime();
