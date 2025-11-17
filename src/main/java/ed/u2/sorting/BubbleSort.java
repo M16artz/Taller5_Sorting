@@ -44,7 +44,7 @@ public final class BubbleSort {
 
             // Mostrar inicio de pasada externa
             SortingUtils.showCurrentState(header, array, externalIterations, internalIterations,
-                    comparisons, assignments, i, -1, "Inicio pasada " + (i + 1));
+                    comparisons, assignments, i, 0, "Inicio pasada " + (i + 1));
 
             for (int j = 0; j < array.length - 1 - i; j++) {
                 internalIterations++;

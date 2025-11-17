@@ -18,6 +18,7 @@ public class SortingDemo {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        System.out.println("\n".repeat(30));
         System.out.println("--- DEMOSTRACIÓN DE ALGORITMOS DE ORDENACIÓN IN-PLACE ---");
 
         while (true) {
@@ -144,7 +145,7 @@ public class SortingDemo {
         long startTime = System.nanoTime();
         switch (algorithmChoice) {
             case "1":
-                System.out.println("\n--- Ejecutando Insertion Sort (Recomendado empezar aquí) ---");
+                System.out.println("\n--- Ejecutando Insertion Sort ---");
                 InsertionSort.sort(arr, trace);
                 break;
             case "2":
@@ -152,8 +153,8 @@ public class SortingDemo {
                 SelectionSort.sort(arr, trace);
                 break;
             case "3":
-                System.out.println("\n--- Ejecutando Bubble Sort --- (Verifique optimización de corte temprano)");
-                BubbleSort.sort(arr, trace);
+                System.out.println("\n--- Ejecutando Bubble Sort ---");
+            BubbleSort.sort(arr, trace);
                 break;
             default:
                 System.out.println("Opción no válida.");
